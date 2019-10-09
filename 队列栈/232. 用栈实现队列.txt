@@ -1,0 +1,46 @@
+/*
+232. 用栈实现队列
+*/
+
+class MyQueue {
+public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        stack<int> tmp_stack;
+        while(!my_stack.empty()){
+            int x = my_stack.top();
+            tmp_stack.push(x);
+            my_stack.pop();
+        }
+        my_stack.push(x);
+        while(!tmp_stack.empty()){
+            int x = tmp_stack.top();
+            my_stack.push(x);
+            tmp_stack.pop();
+        }
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        int x = my_stack.top();
+        my_stack.pop();
+        return x;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        return my_stack.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return my_stack.empty();
+    }
+private:
+    stack<int> my_stack;
+};

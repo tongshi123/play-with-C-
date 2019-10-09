@@ -1,0 +1,50 @@
+/*
+225. 用队列实现栈
+借助另外一个队列
+*/
+
+class MyStack {
+public:
+    /** Initialize your data structure here. */
+    MyStack() {
+        
+    }
+    
+    /** Push element x onto stack. */
+    void push(int x) {
+        queue<int> temp_q;
+        temp_q.push(x);
+        while(!_date.empty())
+        {
+            int x = _date.front();
+            _date.pop();
+            temp_q.push(x);
+        }
+        while(!temp_q.empty()){
+            int x = temp_q.front();
+            temp_q.pop();
+            _date.push(x);
+        }
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    int pop() {
+        int x = _date.front();
+        _date.pop();
+        return x;
+    }
+    
+    /** Get the top element. */
+    int top() {
+        int x = _date.front();
+        return x;
+    }
+    
+    /** Returns whether the stack is empty. */
+    bool empty() {
+        return _date.empty();
+    }
+private:
+    queue<int> _date;
+};
+
