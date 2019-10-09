@@ -1,0 +1,47 @@
+/*
+21. 合并两个有序链表
+借助vector 和sort的仿函数		cool！！！
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+bool compare(ListNode*  a,ListNode* b)
+        {
+            return a->val < b->val;
+        }
+
+class Solution {
+    
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        vector<ListNode*> vec;
+        while(l1)
+        {
+            vec.push_back(l1);
+            l1 = l1->next;
+        }
+        while(l2)
+        {
+            vec.push_back(l2);
+            l2 = l2->next;
+        }
+        if(vec.size() == 0)
+            return nullptr;
+        sort(vec.begin(), vec.end(), compare);
+        
+        ListNode* head = vec[0];
+        for(int i = 1; i < vec.size(); ++ i)
+        {
+            vec[i-1]->next = vec[i];
+            if(i == vec.size()-1)
+                vec[i]->next = nullptr;
+        }
+        return head;
+    }
+};

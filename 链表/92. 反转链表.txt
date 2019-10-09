@@ -1,0 +1,44 @@
+/*
+92. 反转链表
+solve bu vector(amazing tool!!!)
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+      //  if(m == n)
+        //    return head;
+           
+    ListNode* result = nullptr;        
+    vector<ListNode*> vec;
+	while(head)
+	{
+		vec.push_back(head);
+		head = head->next; 
+	}  
+    //for(auto c : vec)
+      //  cout << c->val ;
+    //cout << endl;
+	reverse(vec.begin()+m-1, vec.begin()+n);
+    //for(auto c : vec)
+       // cout << c->val ;
+     result = vec[0];   
+	for(int i = 1; i < vec.size(); ++ i)
+	{
+	    vec[i-1]->next = vec[i];	
+        if(i == vec.size()-1)
+            vec[i]->next = nullptr;
+	}
+	
+    return result;
+        
+    }
+};

@@ -1,0 +1,50 @@
+/*
+141. 环形链表
+way slove by vector or set 
+way2 slove 快慢指针
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        //////////////方法1
+        /*
+        vector<ListNode*> vec;
+        ListNode* pHead = head;
+        
+        while(pHead)
+        {
+            if(find(vec.begin(), vec.end(), pHead) != vec.end())
+                return true;
+            vec.push_back(pHead);
+            pHead = pHead->next;
+        }
+        return false;
+        */
+        
+		
+        /////////////方法2 快慢指针
+        if( head == nullptr)
+                return false;
+        ListNode* fast = head;
+        ListNode* slow = head;
+        ListNode* pHead = head;
+        
+        while(fast && fast->next)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow)
+                return true;
+        }
+        return false;
+    }
+};

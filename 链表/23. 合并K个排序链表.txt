@@ -1,0 +1,45 @@
+/*
+23. 合并K个排序链表
+和前面一题一样  借助vector 和sort的仿函数 进行排序！！！
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+bool compare(ListNode*  a,ListNode* b)
+        {
+            return a->val < b->val;
+        }
+
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        vector<ListNode*> vec;
+        for(auto c : lists)
+        {
+            ListNode* head = c;
+            while(head)
+            {
+                vec.push_back(head);
+                head = head->next;
+            }
+        }
+        if(vec.size() == 0)
+            return nullptr;
+        sort(vec.begin(), vec.end(), compare);
+        
+        ListNode* head = vec[0];
+        for(int i = 1; i < vec.size(); ++ i)
+        {
+            vec[i-1]->next = vec[i];
+            if(i == vec.size()-1)
+                vec[i]->next = nullptr;
+        }
+        return head;
+    }
+};

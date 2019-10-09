@@ -1,0 +1,69 @@
+/*
+86. 分隔链表
+借助两个临时头指针！！！ cool！
+
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        if(head == nullptr)
+            return nullptr;
+        ListNode* head1 = nullptr;
+        ListNode* head1_start = nullptr;
+        
+        ListNode* head2 = nullptr;
+        ListNode* head2_start = nullptr;
+        
+        //vector<ListNode*> vec;
+        while(head)
+        {
+            if(head->val < x)
+            {
+                if(head1 == nullptr)
+                {
+                    head1 = head;
+                    head1_start = head;
+                }
+
+                else{
+                head1->next = head;
+                head1 = head1->next;
+                }
+            }
+            else{
+                if(head2 == nullptr)
+                {
+                    head2 = head;
+                    head2_start = head;
+                }
+
+                else{
+                head2->next = head;
+                head2 = head2->next;
+                }
+            }
+            head = head->next; 
+        }
+        
+        ///
+        if(head2 != nullptr)
+            head2->next = nullptr;
+        
+        if(head1 != nullptr)
+            head1->next = head2_start;
+        if(head1 != nullptr)
+            return head1_start;
+        else
+            return head2_start;
+        
+    }
+};

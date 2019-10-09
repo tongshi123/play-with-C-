@@ -1,0 +1,67 @@
+/*
+142. 环形链表 II
+way1 solve by vector
+way2 solve by 快慢指针
+*/
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        //////////////方法1
+        /*
+        vector<ListNode*> vec;
+        ListNode* pHead = head;
+        
+        while(pHead)
+        {
+            if(find(vec.begin(), vec.end(), pHead) != vec.end())
+                return pHead;
+            vec.push_back(pHead);
+            pHead = pHead->next;
+        }
+        return nullptr;
+        */
+        
+        /////////////方法2 快慢指针
+        ListNode * meet = nullptr;
+        if( head == nullptr)
+                return nullptr;
+        ListNode* fast = head;
+        ListNode* slow = head;
+        ListNode* pHead = head;
+        
+        while(fast && fast->next)
+        {
+            fast = fast->next->next;
+            slow = slow->next;
+            if(fast == slow)
+            {
+                meet = fast;
+                break;
+            }
+            
+        }
+        if(meet)
+        {
+            while(head != meet)
+            {
+                head = head->next;
+                meet = meet->next;
+            }
+            return meet;
+        }
+        else{
+            return nullptr;
+        }
+        
+    }
+};

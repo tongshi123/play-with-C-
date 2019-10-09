@@ -1,0 +1,86 @@
+/*
+160. 相交链表
+way1 solve by set
+way2 solve by meet between double
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        /*方法1  by  set
+        if(!headA || !headB)
+            return nullptr;
+        
+        set<ListNode* >  set_node;
+        
+        while(headA)
+        {
+            set_node.insert(headA);
+            headA = headA->next;
+        }
+        while(headB)
+        {
+            int size1 = set_node.size();
+            set_node.insert(headB);
+            int size2 = set_node.size();
+            if(size1 == size2)
+                return headB;
+            headB = headB->next;
+        }
+        return nullptr;
+        */
+		
+		
+        //方法2
+        if(!headA || !headB)
+            return nullptr;
+        ListNode* headAA = headA;
+        ListNode* headBB = headB;
+        int sizeA=0;
+        int sizeB = 0;
+        while(headAA)
+        {
+            ++ sizeA;
+            headAA = headAA->next;
+        }
+        while(headBB)
+        {
+            ++ sizeB;
+            headBB = headBB->next;
+        }
+        if(sizeA >= sizeB)
+        {
+            int cha = sizeA - sizeB;
+            while(cha--)
+            {
+                headA = headA->next;    
+            }
+        }
+        else
+        {
+            int cha = sizeB - sizeA;
+            while(cha-- )
+            {
+                headB = headB->next;    
+            }
+        }
+        while(headA)
+        {
+            if(headA == headB)
+            {
+                return headA;
+            }
+           headA = headA->next;    
+           headB = headB->next;    
+        }
+        return nullptr;
+    }
+};
