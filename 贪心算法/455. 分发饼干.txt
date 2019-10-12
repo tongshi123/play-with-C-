@@ -1,0 +1,24 @@
+/*
+455. 分发饼干
+俩vector排序后， 用两个迭代器一次遍历比较
+*/
+
+class Solution {
+public:
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        sort(g.begin(), g.end());
+        sort(s.begin(), s.end());
+        
+        int count = 0;				//要赋初值0， 否则报错
+        auto it = g.begin();  
+        auto it1 = s.begin();
+        while(it != g.end() && it1 != s.end() ){
+            if(*it1 >= *it){
+                ++ count;
+                it += 1;
+            }
+            it1 += 1;
+        }
+        return count;
+    }
+};

@@ -1,0 +1,55 @@
+/*
+376. 摆动序列
+用状态机思想解决
+*/
+
+class Solution {
+public:
+    int wiggleMaxLength(vector<int>& nums) {
+        if(nums.size() <= 2){
+            if(nums.size() == 2){			
+                if(nums[0] == nums[1])		//排除出现{0，0}的情况
+                    return 1;
+            }
+            return nums.size();
+        }
+		//定义三种状态
+        const int BEGIN = 3;        		//在switch定义的变量要加const
+        const int UP = 1;
+        const int DOWN = 2;
+        int STATE = BEGIN;
+        int count = 1;
+        
+        for(int i = 1; i < nums.size(); ++ i){
+            switch (STATE) {
+            case BEGIN:
+                    if(nums[i-1] == nums[i]){
+                        STATE = BEGIN;
+                    }
+                    else if(nums[i-1] < nums[i]){
+                        STATE = UP;
+                        ++ count;
+                    }
+                    else if(nums[i-1] > nums[i]){
+                        STATE = DOWN;
+                        ++ count;
+                    }
+            break;
+            case UP:
+                    if(nums[i-1] > nums[i]){			//UP状态下只考虑DOWN情况
+                        STATE = DOWN;
+                        ++ count;
+                    }
+            break;
+                    
+            case DOWN:									//DOWN状态下只考虑UP情况
+                    if(nums[i-1] < nums[i]){
+                         STATE = UP;
+                         ++ count;
+                    }
+            break;
+        }
+    }
+        return count;
+    }
+};

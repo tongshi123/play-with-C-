@@ -1,0 +1,32 @@
+/*
+	45. 跳跃游戏 II		到达末尾的最小步数
+*/
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int cur_max_index = nums[0];
+    	int pre_max_index = nums[0];
+    	int jump_min = 1;
+    	if(nums.size() < 2)
+			return 0;  
+        for(int i = 1; i < nums.size(); ++ i)
+        {
+ 
+            if(i > cur_max_index)					//更新cur_max_index, 并且步数加1
+			{
+				++ jump_min;
+				cur_max_index = pre_max_index;
+                
+			}
+            if((i + nums[i]) > pre_max_index)		//在遍历过程中寻找 i + nums[i](可到达最远的位置)
+            {
+                pre_max_index = i + nums[i];
+                //cout << pre_max_index << endl;
+            }
+                
+		
+		}
+         return jump_min;
+    }
+};
