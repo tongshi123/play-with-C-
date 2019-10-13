@@ -1,0 +1,56 @@
+/*
+	90. 子集 II
+*/
+
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> req;
+        vector<int> vec;
+        set<vector<int>> reqq;					//注意set里面元素的类型
+        vector<vector<int>> reqqq;
+        req.push_back(vec);    
+        
+        sort(nums.begin(), nums.end());			//排序这一步很重要
+        
+        generate( 0, nums,  vec,  req);
+        
+        for(auto c : req)						//set里面去重一哈
+        {
+            reqq.insert(c);
+        }
+        for(auto c : reqq)						//从set里面取出来重新放到要求返回类型的vector当中
+        {
+            reqqq.push_back(c);
+        }
+        return reqqq;
+    }
+private:
+    void generate(int i, vector<int>& nums, vector<int>& vec, vector<vector<int>>& req)
+    {
+        if(i >= nums.size())
+            {
+                return;
+            }
+
+        vec.push_back(nums[i]);
+		/*
+		或者这样使用set(在set里面找不到)
+		if(my_set.find(vec) == my_set.end())
+		{
+			req.push_back(vec);
+			my_set.insert(vec);
+		}
+		
+		*/
+        req.push_back(vec);
+		
+        generate( i+1, nums,  vec,  req);
+        
+        vec.pop_back();				//回溯！！！
+        
+        generate( i+1, nums,  vec,  req);
+
+    } 
+    
+};

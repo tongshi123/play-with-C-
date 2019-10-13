@@ -1,0 +1,43 @@
+/*
+	40. 组合总和 II
+	还是递归+回溯的思想， 同时为了排除重复的vec（避免出现[1,2,2]和[2,1,2]或者[2,2,1]）， 
+	就先对candidates排序，后面L33-L37行， 利用set去重
+*/
+
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        int sum = 0;
+        vector<vector<int> > req;
+        vector<int> vec;
+        set<vector<int> > set_req;
+        sort(candidates.begin(), candidates.end());
+        generate( 0, candidates,  vec,  req,  set_req,  sum,target);
+        
+        
+        return req;
+    }
+private:
+    void generate(int i, vector<int>& nums,  vector<int>& vec, vector<vector<int> >& req, set<vector<int> >& set_req,
+                int sum, int target)
+    {
+        if(i >= nums.size() || sum >target)			//减枝思想！！
+            {
+                return;
+            }
+
+        sum += nums[i];
+        vec.push_back(nums[i]);
+        
+        if(target == sum && set_req.find(vec) == set_req.end())	  //满足target， 同时去重
+        {
+            set_req.insert(vec);
+            req.push_back(vec);
+        }
+        generate( i + 1 , nums,  vec,  req,  set_req,  sum,target);
+        
+        sum -= nums[i];					//回溯！！！
+        vec.pop_back();
+        generate( i + 1 , nums,  vec,  req,  set_req,  sum,target);
+    } 
+};

@@ -1,0 +1,32 @@
+/*
+	78. 子集
+	递归和回溯
+*/
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> req;
+        vector<int> vec;
+        req.push_back(vec);    
+     
+        generate( 0, nums,  vec,  req);
+        
+        return req;
+    }
+private:												//	由于声明形参的时候没有加&, 一直报错！！
+    void generate(int i, vector<int>& nums, vector<int>& vec, vector<vector<int>>& req)
+    {
+        if(i >= nums.size())						
+            {
+                return;
+            }
+
+        vec.push_back(nums[i]);
+        req.push_back(vec);
+        generate( i+1, nums,  vec,  req);
+        
+        vec.pop_back();
+        generate( i+1, nums,  vec,  req);
+    }
+};
